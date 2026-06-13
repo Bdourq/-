@@ -1,0 +1,6 @@
+{
+  "name": "Loatah Shop",
+  "description": "لوحة متكاملة وصفحة هبوط عالية التحويل لمتجر لقطة لتعزيز مبيعات أزياء العباءات والملابس التركية الشرعية والعملية في الأردن.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

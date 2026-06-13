@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #5A5A40;
+  --color-primary-dark: #444430;
+  --color-primary-light: #707055;
+  --color-secondary: #8B735B;
+  --color-secondary-dark: #6F5B47;
+  --color-natural-bg: #FDFBF7;
+  --color-natural-border: #EAE3D5;
+  --color-text-dark: #2D2926;
+  
+  --font-serif: "Amiri", serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
