@@ -340,20 +340,23 @@ ${sizePart}
               تخصيص الموديل واللون والقياس
             </h4>
 
-            {/* Select Product Dropdown */}
-            <div>
-              <label className="block text-xs font-bold text-text-dark mb-1.5 font-serif">اختر الموديل المطلوب تفصيله/تسليمه:</label>
-              <select
-                value={activeProduct.id}
-                onChange={(e) => handleProductChange(e.target.value)}
-                className="w-full bg-[#FAF8F5]/80 border border-natural-border rounded-xl px-3.5 py-2.5 text-sm font-serif font-medium text-text-dark focus:ring-secondary focus:border-secondary transition-all"
-              >
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} ({p.price} دنانير أردنية)
-                  </option>
-                ))}
-              </select>
+            {/* Select Product Infopack - Locked on the Luxurious Royal Abaya */}
+            <div className="bg-[#FAF8F5] border border-secondary/20 p-3.5 rounded-2xl flex items-center justify-between gap-3 shadow-inner">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-lg shrink-0">
+                  👑
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block">الموديل المختار للتفصيل</span>
+                  <strong className="text-xs md:text-sm font-bold text-text-dark font-serif block">
+                    {activeProduct.name}
+                  </strong>
+                </div>
+              </div>
+              <div className="text-left py-1 px-3 bg-secondary/10 rounded-xl">
+                <span className="text-secondary font-black text-sm block font-sans">18 د.أ</span>
+                <span className="text-[9px] text-secondary-dark font-serif block truncate">توصيل مجاني 🎁</span>
+              </div>
             </div>
 
             {/* Select Color Swatches */}

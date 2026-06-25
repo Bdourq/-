@@ -3,6 +3,9 @@ import { Play, Pause, Volume2, VolumeX, Minimize, Maximize, RefreshCw, Eye, Spar
 import { motion, AnimatePresence } from 'motion/react';
 import { Product } from '../types';
 
+import abayaPleatsVideo1 from '../assets/videos/abaya_pleats_video_1.mp4';
+import abayaPleatsVideo2 from '../assets/videos/abaya_pleats_video_2.mp4';
+
 interface VideoReviewProps {
   products: Product[];
   activeProductIndex: number;
@@ -15,14 +18,27 @@ export default function VideoReview({ products, activeProductIndex, onSelectProd
   const [progress, setProgress] = useState(0);
   const [simulatedViews, setSimulatedViews] = useState(1480);
   const [useHtmlVideo, setUseHtmlVideo] = useState(true);
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState(abayaPleatsVideo1);
   
   const videoRef = useRef<HTMLVideoElement>(null);
-  const activeProduct = products[activeProductIndex];
+  const activeProduct = products[0] || products[activeProductIndex];
   
   // Create a beautiful file slide deck using the high quality photos
   const gallery = activeProduct.images || [activeProduct.image];
   const activeSlideIndex = Math.min(Math.floor((progress / 100) * gallery.length), gallery.length - 1);
   const currentImage = gallery[activeSlideIndex] || activeProduct.image;
+
+  // Sync video playing on source changes
+  useEffect(() => {
+    if (videoRef.current && useHtmlVideo) {
+      videoRef.current.load();
+      if (isPlaying) {
+        videoRef.current.play().catch(() => {
+          setUseHtmlVideo(false);
+        });
+      }
+    }
+  }, [selectedVideoUrl]);
 
   // Increase views slowly to simulate live high-converting traffic activity!
   useEffect(() => {
@@ -85,27 +101,39 @@ export default function VideoReview({ products, activeProductIndex, onSelectProd
           </p>
         </div>
 
-        {/* Dynamic Model Selector (No Text Overlap, Strictly Placed Outside) */}
-        <div className="flex flex-wrap justify-center gap-2 mb-6 font-serif">
-          {products.map((prod, idx) => (
-            <button
-              key={prod.id}
-              onClick={() => {
-                onSelectProduct(idx);
-                setProgress(0);
-                // Try playing video file first on manual changes!
-                setUseHtmlVideo(true);
-              }}
-              className={`px-4 py-2 text-xs md:text-sm font-bold rounded-full transition-all duration-300 flex items-center gap-1.5 border cursor-pointer font-serif ${
-                activeProductIndex === idx
-                  ? 'bg-secondary text-white border-secondary shadow-md'
-                  : 'bg-white text-[#2C2C24] border-natural-border hover:bg-[#FAF8F5]'
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full ${activeProductIndex === idx ? 'bg-white animate-pulse' : 'bg-secondary'}`} />
-              {prod.name.split(' - ')[0].split(' "')[0].replace('عباية "', 'عباية ')}
-            </button>
-          ))}
+        {/* Dynamic Angles Selector (No Text Overlap, Strictly Placed Outside) */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-6 font-serif">
+          <button
+            onClick={() => {
+              setSelectedVideoUrl(abayaPleatsVideo1);
+              setProgress(0);
+              setUseHtmlVideo(true);
+            }}
+            className={`px-5 py-2.5 text-xs md:text-sm font-bold rounded-full transition-all duration-300 flex items-center gap-1.5 border cursor-pointer font-serif ${
+              selectedVideoUrl === abayaPleatsVideo1
+                ? 'bg-secondary text-white border-secondary shadow-md'
+                : 'bg-white text-[#2C2C24] border-natural-border hover:bg-[#FAF8F5]'
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full ${selectedVideoUrl === abayaPleatsVideo1 ? 'bg-white animate-pulse' : 'bg-secondary'}`} />
+            <span>الفيديو الأول: استعراض حركة وتفصيل العباية الملكية 🎥</span>
+          </button>
+
+          <button
+            onClick={() => {
+              setSelectedVideoUrl(abayaPleatsVideo2);
+              setProgress(0);
+              setUseHtmlVideo(true);
+            }}
+            className={`px-5 py-2.5 text-xs md:text-sm font-bold rounded-full transition-all duration-300 flex items-center gap-1.5 border cursor-pointer font-serif ${
+              selectedVideoUrl === abayaPleatsVideo2
+                ? 'bg-secondary text-white border-secondary shadow-md'
+                : 'bg-white text-[#2C2C24] border-natural-border hover:bg-[#FAF8F5]'
+            }`}
+          >
+            <span className={`w-2 h-2 rounded-full ${selectedVideoUrl === abayaPleatsVideo2 ? 'bg-white animate-pulse' : 'bg-secondary'}`} />
+            <span>الفيديو الثاني: قرب الخامة والكسرات المروحية غاية الجودة 🔎</span>
+          </button>
         </div>
 
         {/* Active Product Specs - STRICTLY Placement ABOVE the video to guide user */}
@@ -113,7 +141,7 @@ export default function VideoReview({ products, activeProductIndex, onSelectProd
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <span className="text-xs text-secondary font-bold uppercase tracking-wider font-serif">
-                الموديل المستعرض حالياً
+                الموديل الملكي المستعرض حالياً
               </span>
               <h3 className="text-lg md:text-xl font-bold text-text-dark mt-0.5 font-serif">
                 {activeProduct.name}
@@ -123,7 +151,7 @@ export default function VideoReview({ products, activeProductIndex, onSelectProd
               </p>
             </div>
             <div className="bg-natural-bg border border-natural-border rounded-xl px-4 py-2 shrink-0 text-center md:text-right font-serif">
-              <span className="text-secondary-dark text-xs block font-serif">سعر العرض الخاص</span>
+              <span className="text-secondary-dark text-xs block font-serif">سعر العرض الخاص (شامل الشال والتوصيل مجاناً)</span>
               <span className="text-xl md:text-2xl font-black text-secondary-dark text-[#5A5A40] font-sans">
                 {activeProduct.price} <span className="text-sm font-serif font-normal">دنانير أردنية</span>
               </span>
@@ -144,11 +172,11 @@ export default function VideoReview({ products, activeProductIndex, onSelectProd
           
           {/* Active Product Visual Render inside the player container */}
           <div className="absolute inset-0 w-full h-full bg-slate-950 flex items-center justify-center">
-            {useHtmlVideo && activeProduct.video ? (
+            {useHtmlVideo && selectedVideoUrl ? (
               <video
-                key={activeProduct.video}
+                key={selectedVideoUrl}
                 ref={videoRef}
-                src={activeProduct.video}
+                src={selectedVideoUrl}
                 className="w-full h-full object-cover"
                 playsInline
                 autoPlay

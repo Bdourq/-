@@ -238,172 +238,166 @@ export default function App() {
         </div>
       </section>
 
-      {/* Flagship Models Showcase Group (Best Sellers) */}
+      {/* Unified Premium Model Showcase for Luxurious Royal Abaya */}
       <section className="py-16 max-w-6xl mx-auto px-4" id="best-sellers">
         
-        {/* Core title */}
-        <div className="text-center mb-10 max-w-2xl mx-auto">
-          <span className="text-primary text-xs font-bold uppercase tracking-widest bg-primary/10 border border-primary/20 px-4 py-1.5 rounded-full inline-block">
-            التشكيلة الرسمية الجديدة لعام 2026
+        {/* Section title */}
+        <div className="text-center mb-12 max-w-2xl mx-auto">
+          <span className="text-[#8B735B] text-xs font-bold uppercase tracking-widest bg-[#8B735B]/10 border border-[#8B735B]/20 px-4 py-1.5 rounded-full inline-block">
+            تاج الفخامة والأناقة الشرعية لعام 2026 👑
           </span>
           <h3 className="text-2xl md:text-3xl font-serif font-bold text-text-dark mt-4 leading-tight">
-            التصاميم الأكثر طلباً وشعبية للأزياء النسائية الشرعية والعملية
+            عباية "لقطة كوليكشن" الملكية الفاخرة بكسرات روحية
           </h3>
           <p className="text-secondary-dark text-sm mt-3 leading-relaxed">
-            استخرجنا من ملفات تفصيلنا أرقى القطع والخياطة التي حظيت بأعلى نسب رضا صبايا الأردن. اختاري موديلك المفضل وواجهتك لتعبئة الطلبية فوراً!
+            استكشفي الموديل الملكي الأكثر مبيعاً ورغبةً لدى صبايا الأردن. خياطة محلية بإبر أردنية خبيرة تفصل خصيصاً لتناسب طولكِ ووزنكِ وتضمن وقاراً وثقة تامة!
           </p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto w-full">
-          {productsList.map((prod, idx) => {
-            const hasBulkAndOffers = !!prod.offerPrice;
-            const currentImg = selectedImages[prod.id] || prod.image;
+        {/* Master Showcase Layout: Gallery on one side, Specs on the other */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start max-w-5xl mx-auto bg-white rounded-3xl border border-natural-border p-6 md:p-10 shadow-lg">
+          
+          {/* Right Column: Premium Interactive Slide Gallery */}
+          <div className="lg:col-span-6 space-y-4">
             
-            return (
-              <div 
-                key={prod.id}
-                className="group bg-white rounded-3xl border border-natural-border overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between w-full"
-              >
-                
-                {/* Product main images & headers */}
-                <div className="relative aspect-[4/3] bg-natural-bg overflow-hidden shrink-0">
-                  
-                  {/* Category Indicator Badge */}
-                  <div className="absolute top-4 right-4 z-20 bg-white/95 backdrop-blur-md text-text-dark text-[11px] font-bold py-1.5 px-3 rounded-full shadow-sm border border-natural-border flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-secondary" />
-                    <span>{prod.badgeText || (prod.origin === 'local' ? 'خياطة محلية مميزة 🇯🇴' : 'استيراد تركي فاخر 🇹🇷')}</span>
-                  </div>
-
-                  {/* Pricing dynamic badge on image */}
-                  <div className="absolute bottom-4 left-4 z-20 bg-primary text-white py-1.5 px-4 rounded-full shadow-md font-bold text-xs md:text-sm">
-                    {prod.price} JOD {prod.deliveryPrice === 0 ? 'شامل الشال والتوصيل مجاناً' : '+ التوصيل'}
-                  </div>
-
-                  {/* Quick video badge to scroll down */}
-                  {prod.video && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setSelectedProductIndex(idx);
-                        const videoSection = document.getElementById('video-preview-section');
-                        if (videoSection) {
-                          videoSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
-                      className="absolute top-4 left-4 z-20 bg-black/60 hover:bg-secondary text-white p-2 rounded-full shadow-md transition-all flex items-center gap-1 text-[10px] font-bold"
-                      title="شاهد استعراض الفيديو حي"
-                    >
-                      <span className="w-2 h-2 rounded-full bg-red-600 animate-ping inline-block" />
-                      <span>فيديو حي 🎥</span>
-                    </button>
-                  )}
-
-                  {/* Media Thumbnail strip for easy access (Improve parking spaces and access) */}
-                  {prod.images && prod.images.length > 0 && (
-                    <div className="absolute bottom-4 right-4 left-4 z-20 flex gap-1.5 justify-end bg-black/40 backdrop-blur-sm p-1.5 rounded-xl opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300 max-w-[85%] mx-auto overflow-x-auto no-scrollbar">
-                      {prod.images.map((img, i) => (
-                        <button
-                          key={i}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setSelectedImages(prev => ({ ...prev, [prod.id]: img }));
-                          }}
-                          className={`w-8 h-10 rounded-lg overflow-hidden border-2 transition-all duration-200 shrink-0 ${
-                            currentImg === img
-                              ? 'border-secondary scale-105 shadow-md'
-                              : 'border-white/40 hover:border-white'
-                          }`}
-                        >
-                          <img src={img} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  <img
-                    src={currentImg}
-                    alt={prod.name}
-                    className="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-
-                {/* Content Descriptions */}
-                <div className="p-5 md:p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-secondary font-bold tracking-wide">
-                        {prod.fabric}
-                      </span>
-                      {hasBulkAndOffers && (
-                        <span className="bg-secondary/15 text-secondary border border-secondary/25 text-[10px] font-bold px-2.5 py-0.5 rounded-full">
-                          وفر الأوفر!
-                        </span>
-                      )}
-                    </div>
-                    
-                    <h4 className="text-lg md:text-xl font-serif font-bold text-text-dark leading-tight">
-                      {prod.name}
-                    </h4>
-                    
-                    <p className="text-[#5A5A40] text-xs md:text-sm leading-relaxed">
-                      {prod.description}
-                    </p>
-                  </div>
-
-                  {/* Highlights Bullet-points */}
-                  <div className="bg-natural-bg rounded-2xl p-4 space-y-2 border border-natural-border">
-                    <span className="text-[11px] font-bold text-secondary-dark block">امتيازات حزمة الشراء:</span>
-                    <div className="grid grid-cols-2 gap-2 text-[11px] font-semibold text-text-dark/90">
-                      {prod.includes?.map((inc, i) => (
-                        <span key={i} className="flex items-center gap-1 text-text-dark/95 truncate">
-                          <Check className="w-3.5 h-3.5 text-primary-light shrink-0" />
-                          {inc}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Dynamic Color Palette Options */}
-                  <div className="space-y-2">
-                    <span className="text-xs font-bold text-[#8B735B] block">التدرجات اللونية المتوفرة بالمتجر:</span>
-                    <div className="flex flex-wrap gap-2">
-                      {prod.colors.map((color) => (
-                        <span 
-                          key={color.name}
-                          className="inline-flex items-center gap-1.5 bg-natural-bg text-text-dark text-xs px-2.5 py-1 rounded-full border border-natural-border font-medium"
-                        >
-                          <span className="w-3 h-3 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: color.hex }} />
-                          {color.name.split(' (')[0]}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Dynamic Custom Action Buttons */}
-                  <div className="pt-3 border-t border-natural-border space-y-2">
-                    {prod.offerPrice && (
-                      <p className="text-xs text-secondary font-semibold bg-[#8B735B]/10 p-2.5 rounded-xl text-center border border-[#8B735B]/20">
-                        🎁 {prod.offerPrice.label}
-                      </p>
-                    )}
-                    
-                    <button
-                      onClick={() => handleScrollToForm(idx)}
-                      className="w-full bg-primary hover:bg-primary-dark hover:shadow-lg text-white font-bold text-sm py-3.5 px-4 rounded-full transition duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm shadow-primary/5"
-                    >
-                      <ShoppingBag className="w-4 h-4 shrink-0" />
-                      <span>اطلبي هذا الموديل وميزاته</span>
-                    </button>
-                  </div>
-
-                </div>
-
+            {/* Active Big Image Preview with badges */}
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-natural-bg border border-natural-border group">
+              <div className="absolute top-4 right-4 z-20 bg-emerald-50 text-emerald-850 text-[10px] font-bold py-1 px-2.5 rounded-full shadow-sm border border-emerald-200">
+                🇯🇴 تفصيل محلي يدوي فاخر بعيداً عن كثرة المستورد
               </div>
-            );
-          })}
+
+              <img
+                src={selectedImages['laqta-model-abaya'] || productsList[0].image}
+                alt="عباية لقطة كوليكشن الملكية بكسرات روحية"
+                className="w-full h-full object-cover object-center transition duration-500"
+                referrerPolicy="no-referrer"
+              />
+              
+              <div className="absolute bottom-4 left-4 right-4 z-10 bg-black/50 backdrop-blur-sm p-3 rounded-xl text-center text-white text-xs font-serif font-semibold">
+                طول مخصص ومثالي 100% لخياطة لا تخطئ مقاسكِ
+              </div>
+            </div>
+
+            {/* Thumbnail Navigation Row */}
+            {productsList[0].images && productsList[0].images.length > 0 && (
+              <div className="flex gap-2.5 justify-center overflow-x-auto py-1 no-scrollbar">
+                {productsList[0].images.map((img, i) => {
+                  const currentImg = selectedImages['laqta-model-abaya'] || productsList[0].image;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => {
+                        setSelectedImages(prev => ({ ...prev, ['laqta-model-abaya']: img }));
+                      }}
+                      className={`w-14 h-18 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+                        currentImg === img
+                          ? 'border-secondary scale-105 shadow-md'
+                          : 'border-natural-border hover:border-secondary-dark/60'
+                      }`}
+                    >
+                      <img src={img} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+          </div>
+
+          {/* Left Column: Comprehensive Specifications and Attributes */}
+          <div className="lg:col-span-6 space-y-6 text-right">
+            
+            <div className="space-y-2">
+              <span className="text-secondary font-black text-xs uppercase tracking-wider block">
+                مواصفات وخيوط العباية الملكية بكسرات روحية
+              </span>
+              <h4 className="text-xl md:text-2xl font-serif font-bold text-text-dark leading-snug">
+                تصميم "دبل كلوش" بكسرات مروحية غاية في الهيبة والوقار 👑
+              </h4>
+              <p className="text-secondary-dark text-xs md:text-sm leading-relaxed font-serif">
+                {productsList[0].description}
+              </p>
+            </div>
+
+            {/* Price section and discount badges */}
+            <div className="bg-natural-bg/60 rounded-2xl p-5 border border-natural-border flex items-center justify-between gap-4">
+              <div>
+                <span className="text-secondary-dark/70 text-xs block">سعر التصفية الحالية</span>
+                <span className="text-2xl md:text-3xl font-black text-[#8B735B] font-sans flex items-baseline gap-1">
+                  18 <span className="text-sm font-serif font-normal text-text-dark">دينار أردني فقط</span>
+                </span>
+                <span className="text-xs text-secondary-dark/50 line-through block">السعر الأصلي: 28 دينار أردني</span>
+              </div>
+              <div className="text-center bg-secondary text-white py-1 px-3 rounded-xl shadow-sm text-xs md:text-sm font-bold shrink-0">
+                الشال متناسق مجاناً 🎁
+                <span className="block text-[10px] font-normal font-serif">وتوصيل مجاني لكافة محافظات الأردن!</span>
+              </div>
+            </div>
+
+            {/* Special Double Offer Campaign */}
+            <div className="bg-emerald-50 border border-emerald-250 rounded-2xl p-4.5 space-y-2">
+              <span className="bg-emerald-600 text-white text-[9px] px-2 py-0.5 rounded-md font-bold inline-block">لقطة الموسم السعيدة! 🔥</span>
+              <p className="text-emerald-900 font-bold text-xs md:text-sm font-serif">
+                {productsList[0].offerPrice?.label}
+              </p>
+              <p className="text-emerald-700 text-[10px] leading-relaxed font-serif">
+                * يمكنكِ اختيار لونين مختلفين للقطعتين خلال اتصال خدمة الزبائن لتأكيد طلبكِ المجهز.
+              </p>
+            </div>
+
+            {/* Color preview buttons */}
+            <div className="space-y-2.5">
+              <span className="text-xs font-bold text-[#8B735B] block">درجات الألوان الفاخرة المتاحة للطلب:</span>
+              <div className="flex flex-wrap gap-2">
+                {productsList[0].colors.map((color) => {
+                  const matchingImg = productsList[0].images?.[color.index ? color.index - 1 : 0] || productsList[0].image;
+                  const currentImgSelected = selectedImages['laqta-model-abaya'] || productsList[0].image;
+                  return (
+                    <button
+                      key={color.name}
+                      onClick={() => {
+                        setSelectedImages(prev => ({ ...prev, ['laqta-model-abaya']: matchingImg }));
+                      }}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all ${
+                        currentImgSelected === matchingImg
+                          ? 'border-secondary bg-[#FAF8F5] text-text-dark font-bold shadow-sm scale-102'
+                          : 'border-natural-border bg-white text-secondary-dark hover:bg-natural-bg/50'
+                      }`}
+                    >
+                      <span className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: color.hex }} />
+                      <span>{color.name.split(' (')[0]}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Trust pointers */}
+            <div className="bg-natural-bg rounded-xl p-4 space-y-2 text-xs border border-natural-border font-serif">
+              <span className="text-[11px] font-semibold text-secondary block font-serif">محتويات وامتيازات عبوتكِ الشرعية:</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px] font-medium text-text-dark">
+                {productsList[0].includes?.map((inc, i) => (
+                  <span key={i} className="flex items-center gap-1.5 text-text-dark/95">
+                    <Check className="w-3.5 h-3.5 text-secondary shrink-0" />
+                    <span className="truncate">{inc}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Order Flow trigger CTA */}
+            <div className="pt-2">
+              <button
+                onClick={() => handleScrollToForm(0)}
+                className="w-full bg-secondary hover:bg-secondary-dark hover:shadow-xl text-white font-black text-sm md:text-base py-4 px-6 rounded-full transition duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md transform hover:-translate-y-0.5"
+              >
+                <ShoppingBag className="w-5 h-5 shrink-0" />
+                <span>اطلبي تفصيلك الملكي الآن بـ 18 دينار فقط</span>
+              </button>
+            </div>
+
+          </div>
+
         </div>
 
       </section>
